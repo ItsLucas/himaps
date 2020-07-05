@@ -1,5 +1,6 @@
 package com.example.himaps;
 
+import android.graphics.ImageDecoder;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
             mainFragment = (FirstFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[0]);
             mapFragment = (SecondFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);
             userFragment = (ThirdFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[2]);
+        }
+        int id = getIntent().getIntExtra("id", 0);
+        if (id == 1) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.FirstFragment,new FirstFragment())
+                    .addToBackStack(null)
+                    .commit();
         }
         initView();
     }
