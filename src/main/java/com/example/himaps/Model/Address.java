@@ -1,4 +1,4 @@
-package com.github.AbouOpenSource.Model;
+package com.example.himaps.Model;
 
 public class Address {
     double x;

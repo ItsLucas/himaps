@@ -1,9 +1,6 @@
-package com.github.AbouOpenSource.core;
+package com.example.himaps.core;
 
-import com.github.AbouOpenSource.Model.AccessPoint;
-import com.github.AbouOpenSource.Model.Address;
-import com.github.AbouOpenSource.Model.Cellule;
-
+import com.example.himaps.Model.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,6 +13,9 @@ public class Reader {
     String cvsSplitBy = ",";
 
     BufferedReader bufferedReader;
+    public Reader() {
+
+    }
     public Reader(String csvFile) throws FileNotFoundException, IOException {
         this.csvFile = csvFile;
 

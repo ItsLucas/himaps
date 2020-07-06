@@ -1,4 +1,4 @@
-package com.github.AbouOpenSource.Interface;
+package com.example.himaps.Interface;
 
 public interface Factory {
 

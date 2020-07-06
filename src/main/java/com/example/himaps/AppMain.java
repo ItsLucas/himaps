@@ -1,7 +1,7 @@
-package com.github.AbouOpenSource;
+package com.example.himaps;
 
-import com.github.AbouOpenSource.Model.*;
-import com.github.AbouOpenSource.core.Reader;
+import com.example.himaps.Model.*;
+import com.example.himaps.core.Reader;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,7 +12,6 @@ public class AppMain {
     public static void main(String[] args) throws IOException {
         String path = "F:\\himaps\\KNN\\KNN-Indoor-Location-\\src\\main\\java\\com\\github\\AbouOpenSource\\data\\data.csv";
 
-1
         Reader reader = new Reader(path);
         /**
          * for each address in the space, i associate a Cellule that contains the signal strength of each Ap in the env
