@@ -97,7 +97,7 @@ public class SecondFragment extends Fragment {
         private Canvas canvas;
         private SurfaceHolder surfaceHolder;
         private ArrayList<GameObject> objlist;
-
+        GameObject obj;
         public MySurfaceView(Context context) {
             super(context);
             this.setZOrderOnTop(true);//设置画布背景透明
@@ -105,12 +105,13 @@ public class SecondFragment extends Fragment {
             this.surfaceHolder=this.getHolder();
             this.surfaceHolder.addCallback(this);
             this.objlist = new ArrayList<GameObject>();
-            objlist.add(new GameObject());
+            this.obj = new GameObject();
         }
 
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             this.thread = new Thread(this);
+            Toast.makeText(getActivity(),"Starting thread",Toast.LENGTH_SHORT).show();
             this.thread.start();
         }
 
@@ -126,22 +127,20 @@ public class SecondFragment extends Fragment {
 
         @Override
         public void run() {
+
             while(true){
-                int i=0;
-                while(i<objlist.size())
-                {
-                    GameObject obj = objlist.get(i);
-                    obj.getPos();
-                    canvas = this.surfaceHolder.lockCanvas();
-                    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
-                    obj.drawSelf(canvas);
-                    this.surfaceHolder.unlockCanvasAndPost(canvas);
-                    i++;
-                } try {
+                canvas = this.surfaceHolder.lockCanvas();
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+                obj.getPos();
+
+                obj.drawSelf(canvas);
+                this.surfaceHolder.unlockCanvasAndPost(canvas);
+                try {
                     Thread.sleep(10);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+                this.surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
     }
@@ -151,13 +150,29 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_second, container, false);
+
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //surfaceView = getActivity().findViewById(R.id.surfaceView);
-        testButton = getActivity().findViewById(R.id.test);
+        getActivity().setContentView(new MySurfaceView(getActivity().getApplicationContext()));
+
+    }
+    private void scanSuccess() {
+        List<ScanResult> results = wifiManager.getScanResults();
+        aps = new ArrayList<>();
+        for (ScanResult r : results) {
+            //resultv.append(r.BSSID + "," + r.SSID + "," + r.level + "\n");
+            aps.add(new AP(r.BSSID,r.SSID,r.level));
+        }
+        Toast.makeText(getActivity(), aps.size() + "APs detected.", Toast.LENGTH_SHORT).show();
+
+    }
+}
+/*
+testButton = (Button)getActivity().findViewById(R.id.test);
         wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         br = new BroadcastReceiver() {
             @Override
@@ -203,15 +218,4 @@ public class SecondFragment extends Fragment {
         fine = getActivity().findViewById(R.id.finePerm);
         fine.setOnClickListener(view124 -> ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100)
         );
-    }
-    private void scanSuccess() {
-        List<ScanResult> results = wifiManager.getScanResults();
-        aps = new ArrayList<>();
-        for (ScanResult r : results) {
-            //resultv.append(r.BSSID + "," + r.SSID + "," + r.level + "\n");
-            aps.add(new AP(r.BSSID,r.SSID,r.level));
-        }
-        Toast.makeText(getActivity(), aps.size() + "APs detected.", Toast.LENGTH_SHORT).show();
-
-    }
-}
+ */
