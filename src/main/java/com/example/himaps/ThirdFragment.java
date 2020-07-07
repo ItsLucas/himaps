@@ -32,18 +32,13 @@ public class ThirdFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btn_add=(Button)getActivity().findViewById(R.id.bt_add);
-        btn_del=(Button)getActivity().findViewById(R.id.bt_del);
-        btn_sel=(Button)getActivity().findViewById(R.id.bt_sel);
-        btn_set=(Button)getActivity().findViewById(R.id.bt_setting);
-        listview = (ListView)getActivity().findViewById(R.id.listView);
+        //btn_add=(Button)getActivity().findViewById(R.id.bt_add);
+        //btn_del=(Button)getActivity().findViewById(R.id.bt_del);
+        //btn_sel=(Button)getActivity().findViewById(R.id.bt_sel);
+        //btn_set=(Button)getActivity().findViewById(R.id.bt_setting);
+        //listview = (ListView)getActivity().findViewById(R.id.listView);
 
-        btn_add.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),AddActivity.class));
-            }
-        });
+        //btn_add.setOnClickListener(v -> startActivity(new Intent(getActivity(),AddActivity.class)));
 
     }
 }
