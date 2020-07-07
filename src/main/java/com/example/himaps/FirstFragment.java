@@ -44,11 +44,12 @@ public class FirstFragment extends Fragment {
                 {Toast.makeText(getActivity(), "login failed", Toast.LENGTH_SHORT).show();}
 
                 else {Toast.makeText(getActivity(),"login success",Toast.LENGTH_SHORT).show();
-                /*
-
-                login success,then enter other interface
-
-                 */}
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_second,new SecondFragment())
+                            .addToBackStack(null)
+                            .commit();
+                }
                 Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();}
         }, new Response.ErrorListener() {
             @Override

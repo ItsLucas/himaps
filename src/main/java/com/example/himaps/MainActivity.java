@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == 1) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.FirstFragment,new FirstFragment())
+                    .replace(R.id.fragment_first,new FirstFragment())
                     .addToBackStack(null)
                     .commit();
         }

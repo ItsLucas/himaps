@@ -8,9 +8,11 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -129,6 +131,7 @@ public class SecondFragment extends Fragment {
                     GameObject obj = objlist.get(i);
                     obj.getPos();
                     canvas = this.surfaceHolder.lockCanvas();
+                    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
                     obj.drawSelf(canvas);
                     this.surfaceHolder.unlockCanvasAndPost(canvas);
                     i++;
