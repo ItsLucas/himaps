@@ -45,11 +45,6 @@ public class FirstFragment extends Fragment {
                 {Toast.makeText(getActivity(), "login failed", Toast.LENGTH_SHORT).show();}
 
                 else {Toast.makeText(getActivity(),"login success",Toast.LENGTH_SHORT).show();
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_second,new SecondFragment())
-                            .addToBackStack(null)
-                            .commit();
                 /*
 
                 login success,then enter other interface
