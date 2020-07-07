@@ -45,19 +45,16 @@ public class FirstFragment extends Fragment {
                 {Toast.makeText(getActivity(), "login failed", Toast.LENGTH_SHORT).show();}
 
                 else {Toast.makeText(getActivity(),"login success",Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_second,new SecondFragment())
                             .addToBackStack(null)
                             .commit();
-=======
                 /*
 
                 login success,then enter other interface
 
                  */
->>>>>>> 0d41c7a030434f0e6bea259b6f5a366bcad0d577
                 }
                 Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();}
         }, new Response.ErrorListener() {
