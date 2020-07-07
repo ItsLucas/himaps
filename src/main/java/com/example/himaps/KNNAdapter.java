@@ -16,6 +16,12 @@ public class KNNAdapter {
     private Space space;
     private Vector<AccessPoint> signaux;
     private Cellule cellule;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    private Address address;
     public KNNAdapter(String jsonstring, ArrayList<AP> aps) {
         JsonReader reader = new JsonReader(jsonstring);
         HashMap<Address, Cellule> hashMap = reader.getCellulesByJson();
@@ -27,10 +33,6 @@ public class KNNAdapter {
         cellule = new Cellule(signaux);
         Vector<Cellule> vector = space.getKNeighboors(cellule,4);
         System.out.println("K=4: ");
-        for (Cellule celule:vector) {
-            System.out.println(celule.getAddress());
-        }
-        Address address = space.getCenterWithoutPonderation(cellule,4);
-        System.out.println("Center solution with:"+address);
+        address = space.getCenterWithoutPonderation(cellule,4);
     }
 }
