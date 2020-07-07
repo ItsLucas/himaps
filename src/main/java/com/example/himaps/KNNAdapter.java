@@ -31,8 +31,8 @@ public class KNNAdapter {
             signaux.add(new AccessPoint(aps.get(i).bssid,aps.get(i).strength));
         }
         cellule = new Cellule(signaux);
-        Vector<Cellule> vector = space.getKNeighboors(cellule,4);
-        System.out.println("K=4: ");
-        address = space.getCenterWithoutPonderation(cellule,4);
+        //Vector<Cellule> vector = space.getKNeighboors(cellule,4);
+        //System.out.println("K=4: ");
+        address = space.getCenterWithoutPonderation(cellule,6);
     }
 }

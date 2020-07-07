@@ -1,5 +1,6 @@
 package com.example.himaps;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.text.TextUtils;
@@ -48,7 +49,8 @@ public class FirstFragment extends Fragment {
 
                 login success,then enter other interface
 
-                 */}
+                 */
+                }
                 Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();}
         }, new Response.ErrorListener() {
             @Override
@@ -79,7 +81,12 @@ public class FirstFragment extends Fragment {
         });
         textname=(EditText) view.findViewById(R.id.et_user_name);
         textpassd=(EditText) view.findViewById(R.id.et_psw);
-
+        view.findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),RegisterActivity.class));
+            }
+        });
         view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -77,7 +77,7 @@ public class SecondFragment extends Fragment {
         private Bitmap img;
         private Paint paint;
         public GameObject(){
-            //this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
+            this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
             this.x = -100;
             this.y = -100;
             this.paint=new Paint();
@@ -181,7 +181,7 @@ public class SecondFragment extends Fragment {
         Button button2 = getActivity().findViewById(R.id.button2);
         button2.setOnClickListener(view1 -> {
             queue = Volley.newRequestQueue(getActivity());
-            StringRequest strreq = new StringRequest(Request.Method.GET, "http://52.229.167.249/getspots.php?zone=1", response -> {
+            StringRequest strreq = new StringRequest(Request.Method.GET, "http://52.229.167.249/getspots.php?zone=2", response -> {
                 adapter = new KNNAdapter(response,aps);
                 Address address = adapter.getAddress();
                 Toast.makeText(getActivity(),address.toString(),Toast.LENGTH_LONG).show();
