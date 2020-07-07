@@ -28,6 +28,7 @@ public class Space {
      * @return
      */
     public double computeDistance(Cellule cellule, Cellule cellule1){
+        double sum = 0.0;
         return Math.sqrt(
           Math.pow(cellule.getAccessPoints().elementAt(0).strength-cellule1.getAccessPoints().elementAt(0).strength,2)+
           Math.pow(cellule.getAccessPoints().elementAt(1).strength-cellule1.getAccessPoints().elementAt(1).strength,2)+
@@ -41,6 +42,7 @@ public class Space {
        Cellule tmp = new Cellule();
 
            for (Map.Entry<Address, Cellule> entry : mapCellule.entrySet()) {
+               if(entry.getValue().accessPoints.size()<=3) continue;
                 double distance_compute = this.computeDistance(entry.getValue(),cellule);
                 KNeighboors.add(new Distance(distance_compute, entry.getValue()));
 

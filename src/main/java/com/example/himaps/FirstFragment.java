@@ -1,5 +1,6 @@
 package com.example.himaps;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.text.TextUtils;
@@ -44,11 +45,19 @@ public class FirstFragment extends Fragment {
                 {Toast.makeText(getActivity(), "login failed", Toast.LENGTH_SHORT).show();}
 
                 else {Toast.makeText(getActivity(),"login success",Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_second,new SecondFragment())
                             .addToBackStack(null)
                             .commit();
+=======
+                /*
+
+                login success,then enter other interface
+
+                 */
+>>>>>>> 0d41c7a030434f0e6bea259b6f5a366bcad0d577
                 }
                 Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();}
         }, new Response.ErrorListener() {
@@ -80,7 +89,12 @@ public class FirstFragment extends Fragment {
         });
         textname=(EditText) view.findViewById(R.id.et_user_name);
         textpassd=(EditText) view.findViewById(R.id.et_psw);
-
+        view.findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),RegisterActivity.class));
+            }
+        });
         view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
