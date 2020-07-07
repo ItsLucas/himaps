@@ -80,15 +80,16 @@ public class SecondFragment extends Fragment {
         private Paint paint;
         public GameObject(){
             this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
-            this.x = -100;
-            this.y = -100;
+            this.x = 300;
+            this.y = 300;
             this.paint=new Paint();
         }
         public void drawSelf(Canvas canvas){
             canvas.drawBitmap(img,x,y,paint);
         }
         public void getPos(){
-
+            x=310;
+            y=310;
         }
     }
     class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable{
@@ -104,6 +105,7 @@ public class SecondFragment extends Fragment {
             this.surfaceHolder=this.getHolder();
             this.surfaceHolder.addCallback(this);
             this.objlist = new ArrayList<GameObject>();
+            objlist.add(new GameObject());
         }
 
         @Override

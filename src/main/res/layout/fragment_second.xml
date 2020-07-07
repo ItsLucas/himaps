@@ -20,6 +20,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/ic_map"
+                android:backgroundTint="@color/design_default_color_secondary_variant"
+                android:backgroundTintMode="add"
                 android:visibility="visible" />
         </LinearLayout>
         <ImageView
