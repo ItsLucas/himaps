@@ -89,6 +89,12 @@ public class SecondFragment extends Fragment {
             this.x = 300;
             this.y = 300;
             this.paint=new Paint();
+        }public GameObject(int x,int y){
+            //this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
+            this.img = drawableToBitmap(ContextCompat.getDrawable(getActivity(),R.drawable.ic_md_location_on));
+            this.x = x;
+            this.y = y;
+            this.paint=new Paint();
         }
         public void drawSelf(Canvas canvas){
             canvas.drawBitmap(img,x,y,paint);
@@ -120,7 +126,7 @@ public class SecondFragment extends Fragment {
         public MySurfaceView(Context context) {
             super(context);
             this.setZOrderOnTop(true);//设置画布背景透明
-            this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+            this.getHolder().setFormat(PixelFormat.TRANSPARENT);
             this.surfaceHolder=this.getHolder();
             this.surfaceHolder.addCallback(this);
             this.objlist = new ArrayList<GameObject>();
@@ -157,23 +163,19 @@ public class SecondFragment extends Fragment {
         }
         @Override
         public void run() {
-
+            Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
+            Rect rect = new Rect(0, 0, 2560, 1600);//地图填充的矩形范围
+            RectF rectf = new RectF(0, 0, 1280, 1920);//地图放置的位置
+            canvasmap = this.surfaceHolder.lockCanvas();
+            canvasmap.drawBitmap(bitmap,rect,rectf,paint);
+            this.surfaceHolder.unlockCanvasAndPost(canvasmap);
+            objlist.add(new GameObject());
+            objlist.add(new GameObject(600,600));
             while(true){
-
-<<<<<<< HEAD
-                Bitmap bitmap=( (BitmapDrawable)getResources().getDrawable(R.drawable.ic_map)).getBitmap();
-                Rect rect = new Rect(0, 0, 1280, 720);//地图填充的矩形范围
-=======
-                Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
-                Rect rect = new Rect(0, 0, 100, 100);//地图填充的矩形范围
->>>>>>> 5721087ee46119b08f4b6053ee54f508d48e9fd1
-                RectF rectf = new RectF(0, 0, 50, 50);//地图放置的位置
-                canvasmap = this.surfaceHolder.lockCanvas();
-                canvasmap.drawBitmap(bitmap,rect,rectf,paint);
-                this.surfaceHolder.unlockCanvasAndPost(canvasmap);
                 int i=0;
                 canvasobj = this.surfaceHolder.lockCanvas();
-                canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+                canvasobj.drawBitmap(bitmap,rect,rectf,paint);
+                //canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
                 while(i<objlist.size())
                 {
                     GameObject obj = objlist.get(i);
@@ -183,11 +185,13 @@ public class SecondFragment extends Fragment {
                 }
                 this.surfaceHolder.unlockCanvasAndPost(canvasobj);
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(500);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
+
+
         }
     }
     @Override
