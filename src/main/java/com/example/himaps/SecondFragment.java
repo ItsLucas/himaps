@@ -13,6 +13,8 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -79,7 +82,8 @@ public class SecondFragment extends Fragment {
         private Bitmap img;
         private Paint paint;
         public GameObject(){
-            this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
+            //this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
+            this.img = drawableToBitmap(ContextCompat.getDrawable(getActivity(),R.drawable.ic_md_location_on));
             this.x = 300;
             this.y = 300;
             this.paint=new Paint();
@@ -90,6 +94,19 @@ public class SecondFragment extends Fragment {
         public void getPos(){
             x=310;
             y=310;
+        }
+        public Bitmap drawableToBitmap (Drawable drawable) {
+
+            if (drawable instanceof BitmapDrawable) {
+                return ((BitmapDrawable)drawable).getBitmap();
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+
+            return bitmap;
         }
     }
     class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable{
@@ -140,7 +157,6 @@ public class SecondFragment extends Fragment {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                this.surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
     }
@@ -150,14 +166,11 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-<<<<<<< HEAD
         return new MySurfaceView(getActivity().getApplicationContext());
-=======
 
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        //return inflater.inflate(R.layout.fragment_second, container, false);
 
->>>>>>> e50589d3148ebf70f153abf2c5858a2d0152b9d8
-    }
+  }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
