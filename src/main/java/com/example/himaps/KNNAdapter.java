@@ -33,6 +33,6 @@ public class KNNAdapter {
         cellule = new Cellule(signaux);
         //Vector<Cellule> vector = space.getKNeighboors(cellule,4);
         //System.out.println("K=4: ");
-        address = space.getCenterWithoutPonderation(cellule,6);
+        address = space.getCenterWithoutPonderation(cellule,3);
     }
 }
