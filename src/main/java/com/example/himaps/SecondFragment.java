@@ -13,6 +13,8 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.wifi.ScanResult;
@@ -111,10 +113,10 @@ public class SecondFragment extends Fragment {
     }
     class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable{
         private Thread thread;
-        private Canvas canvas;
+        private Paint paint;
+        private Canvas canvasobj,canvasmap;
         private SurfaceHolder surfaceHolder;
         private ArrayList<GameObject> objlist;
-        GameObject obj;
         public MySurfaceView(Context context) {
             super(context);
             this.setZOrderOnTop(true);//设置画布背景透明
@@ -122,7 +124,6 @@ public class SecondFragment extends Fragment {
             this.surfaceHolder=this.getHolder();
             this.surfaceHolder.addCallback(this);
             this.objlist = new ArrayList<GameObject>();
-            this.obj = new GameObject();
         }
 
         @Override
@@ -146,12 +147,23 @@ public class SecondFragment extends Fragment {
         public void run() {
 
             while(true){
-                canvas = this.surfaceHolder.lockCanvas();
-                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
-                obj.getPos();
 
-                obj.drawSelf(canvas);
-                this.surfaceHolder.unlockCanvasAndPost(canvas);
+                Bitmap bitmap=((BitmapDrawable)getResources().getDrawable(R.drawable.ic_map)).getBitmap();
+                Rect rect = new Rect(0, 0, 100, 100);//地图填充的矩形范围
+                RectF rectf = new RectF(0, 0, 50, 50);//地图放置的位置
+                canvasmap.drawBitmap(bitmap,rect,rectf,paint);
+
+                int i=0;
+                canvasobj = this.surfaceHolder.lockCanvas();
+                canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+                while(i<objlist.size())
+                {
+                    GameObject obj = objlist.get(i);
+                    obj.getPos();
+                    obj.drawSelf(canvasobj);//绘制obj到画布
+                    i++;
+                }
+                this.surfaceHolder.unlockCanvasAndPost(canvasobj);
                 try {
                     Thread.sleep(10);
                 }catch (Exception e){
