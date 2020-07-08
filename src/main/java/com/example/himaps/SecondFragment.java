@@ -148,8 +148,8 @@ public class SecondFragment extends Fragment {
 
             while(true){
 
-                Bitmap bitmap=((BitmapDrawable)getResources().getDrawable(R.drawable.ic_map)).getBitmap();
-                Rect rect = new Rect(0, 0, 100, 100);//地图填充的矩形范围
+                Bitmap bitmap=( (BitmapDrawable)getResources().getDrawable(R.drawable.ic_map)).getBitmap();
+                Rect rect = new Rect(0, 0, 1280, 720);//地图填充的矩形范围
                 RectF rectf = new RectF(0, 0, 50, 50);//地图放置的位置
                 canvasmap.drawBitmap(bitmap,rect,rectf,paint);
 
