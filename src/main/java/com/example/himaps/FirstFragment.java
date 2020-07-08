@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.himaps.Model.UserData;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,7 +52,12 @@ public class FirstFragment extends Fragment {
 
                  */
                 }
-                Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();}
+                UserData u= new UserData();
+                u.setuuid(s);
+                u.setpaw(s2);
+                u.setname(s1);
+                //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
+            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError e) {
