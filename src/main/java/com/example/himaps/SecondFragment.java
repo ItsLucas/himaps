@@ -142,17 +142,35 @@ public class SecondFragment extends Fragment {
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
         }
+        public Bitmap drawableToBitmap (Drawable drawable) {
 
+            if (drawable instanceof BitmapDrawable) {
+                return ((BitmapDrawable)drawable).getBitmap();
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+
+            return bitmap;
+        }
         @Override
         public void run() {
 
             while(true){
 
+<<<<<<< HEAD
                 Bitmap bitmap=( (BitmapDrawable)getResources().getDrawable(R.drawable.ic_map)).getBitmap();
                 Rect rect = new Rect(0, 0, 1280, 720);//地图填充的矩形范围
+=======
+                Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
+                Rect rect = new Rect(0, 0, 100, 100);//地图填充的矩形范围
+>>>>>>> 5721087ee46119b08f4b6053ee54f508d48e9fd1
                 RectF rectf = new RectF(0, 0, 50, 50);//地图放置的位置
+                canvasmap = this.surfaceHolder.lockCanvas();
                 canvasmap.drawBitmap(bitmap,rect,rectf,paint);
-
+                this.surfaceHolder.unlockCanvasAndPost(canvasmap);
                 int i=0;
                 canvasobj = this.surfaceHolder.lockCanvas();
                 canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
