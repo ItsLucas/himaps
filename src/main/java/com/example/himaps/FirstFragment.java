@@ -17,6 +17,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.himaps.Model.UserData;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,11 +53,30 @@ public class FirstFragment extends Fragment {
                 login success,then enter other interface
 
                  */
+                    UserData u= new UserData();
+                    u.setuuid(s);
+                    u.setpaw(s2);
+                    u.setname(s1);
+                    EMClient.getInstance().login(s1, s2, new EMCallBack() {
+                        @Override
+                        public void onSuccess() {
+                            EMClient.getInstance().groupManager().loadAllGroups();
+                            EMClient.getInstance().chatManager().loadAllConversations();
+                            Log.i("IM","IM Server logged in. User: "+s1);
+                        }
+
+                        @Override
+                        public void onError(int code, String error) {
+
+                        }
+
+                        @Override
+                        public void onProgress(int progress, String status) {
+
+                        }
+                    });
                 }
-                UserData u= new UserData();
-                u.setuuid(s);
-                u.setpaw(s2);
-                u.setname(s1);
+
                 //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {

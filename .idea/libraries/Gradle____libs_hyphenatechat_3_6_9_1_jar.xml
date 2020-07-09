@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./libs/hyphenatechat_3.6.9.1.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/hyphenatechat_3.6.9.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
