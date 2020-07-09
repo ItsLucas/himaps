@@ -34,7 +34,7 @@ public class FirstFragment extends Fragment {
     private String name;
     private EditText textpassd;
     private String passd;
-
+    private UserData u;
     public static RequestQueue requestQueue;
 
     private void volleyGetRequest(String s1,String s2) {
@@ -53,7 +53,7 @@ public class FirstFragment extends Fragment {
                 login success,then enter other interface
 
                  */
-                    UserData u= new UserData();
+                    u= new UserData();
                     u.setuuid(s);
                     u.setpaw(s2);
                     u.setname(s1);
@@ -136,6 +136,13 @@ public class FirstFragment extends Fragment {
                 {textpassd.setError("the number must be over 6");return;}
                 volleyGetRequest(name,passd);
             }
+        });
+        view.findViewById(R.id.button).setOnClickListener(view1 -> {
+            Intent in = new Intent(getActivity(),ChatActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("user",u.getname());
+            in.putExtras(bundle);
+            startActivity(in);
         });
 
     }

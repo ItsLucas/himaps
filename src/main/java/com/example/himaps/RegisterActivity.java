@@ -39,11 +39,13 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.i("--get--", "onResponse: " + s);
                 if (s.equals("Success")) {
                     Toast.makeText(RegisterActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    try {
-                        EMClient.getInstance().createAccount(s1,s2);
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
-                    }
+                        new Thread(() -> {
+                            try {
+                                EMClient.getInstance().createAccount(s1,s2);
+                            } catch (HyphenateException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
                 }//判断连接是否成功
                 else {
                     Toast.makeText(RegisterActivity.this, "failed", Toast.LENGTH_SHORT).show();
