@@ -110,6 +110,11 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
             volleyGetRequestregister(userName, psw, userPhone);
+
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            intent.putExtra("JumpId",1);
+            startActivity(intent);
+
         });
     }
 

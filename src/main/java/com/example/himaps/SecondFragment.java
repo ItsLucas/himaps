@@ -22,6 +22,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.PixelCopy;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -29,6 +30,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -76,6 +79,9 @@ public class SecondFragment extends Fragment {
     Button fine;
     Button course;
     String resp;
+
+    private RadioGroup menuGroup;
+
     class GameObject {
         private int id;
         private String username;
@@ -127,7 +133,8 @@ public class SecondFragment extends Fragment {
         private ArrayList<GameObject> objlist;
         public MySurfaceView(Context context) {
             super(context);
-            this.setZOrderOnTop(true);//设置画布背景透明
+            this.setZOrderOnTop(true);
+            this.setZOrderMediaOverlay(true);
             this.getHolder().setFormat(PixelFormat.TRANSPARENT);
             this.surfaceHolder=this.getHolder();
             this.surfaceHolder.addCallback(this);
@@ -188,9 +195,10 @@ public class SecondFragment extends Fragment {
         @Override
         public void run() {
             Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
-            Rect rect = new Rect(0, 0, 2560, 1600);//地图填充的矩形范围
-            RectF rectf = new RectF(0, 0, 1280, 1920);//地图放置的位置
+            Rect rect = new Rect(0, 0,3280 , 2560);//地图填充的矩形范围
+            RectF rectf = new RectF(0, 0, 1500,3000 );//地图放置的位置
             canvasmap = this.surfaceHolder.lockCanvas();
+            canvasmap.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
             canvasmap.drawBitmap(bitmap,rect,rectf,paint);
             this.surfaceHolder.unlockCanvasAndPost(canvasmap);
             objlist.add(new GameObject(1000.0f,1500.0f));
@@ -205,7 +213,7 @@ public class SecondFragment extends Fragment {
                 if (success&&aps!=null) {
                     canvasobj = this.surfaceHolder.lockCanvas();
                     canvasobj.drawBitmap(bitmap, rect, rectf, paint);
-                    //canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+                    canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
                     //while(i<objlist.size())
                     //{
                     //GameObject obj = objlist.get(i);
@@ -250,7 +258,9 @@ public class SecondFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setContentView(new MySurfaceView(getActivity().getApplicationContext()));
+
+        MySurfaceView view1 = new MySurfaceView(getActivity().getApplicationContext());
+        getActivity().setContentView(view1);
 
     }
     private void scanSuccess() {
@@ -263,6 +273,7 @@ public class SecondFragment extends Fragment {
         //Toast.makeText(getActivity(), aps.size() + "APs detected.", Toast.LENGTH_SHORT).show();
 
     }
+
 }
 /*
 testButton = (Button)getActivity().findViewById(R.id.test);

@@ -31,7 +31,7 @@ public class ThirdFragment extends Fragment {
     private Button btn_set,btn_add,btn_sel;
     private ListView listview;
     private ArrayList<Map<String, Object>> userdata;
-
+    private Button btn_img;
 
     @Override
     public View onCreateView(
@@ -52,7 +52,12 @@ public class ThirdFragment extends Fragment {
 
         userdata = new ArrayList<>();
         Map<String, Object> item = new HashMap<>();
-        item.put("dis","距离"); item.put("name","姓名");  item.put("phone","电话");
+        item.put("dis","距离（m)"); item.put("name","姓名");  item.put("phone","电话");
+        userdata.add(item);
+
+        //样例
+        item = new HashMap<>();
+        item.put("dis","15");item.put("name","Simon");item.put("phone","15183881327");
         userdata.add(item);
 
         /**
@@ -72,7 +77,7 @@ public class ThirdFragment extends Fragment {
                  *
                  **/
             }
-        })
+        });
 
 
 
@@ -119,16 +124,17 @@ public class ThirdFragment extends Fragment {
                 final View v = getLayoutInflater().inflate(R.layout.dialog_set,null);
                 builder.setView(v);
 
-                Button change_img = view.findViewById(R.id.change_img);
-                change_img.setOnClickListener(new View.OnClickListener() {
+                btn_img = (Button)v.findViewById(R.id.change_img);
+
+                btn_img.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         /***
                          * 上传图片
                          */
+                        Toast.makeText(getActivity(),"Upload Your Photos ",Toast.LENGTH_SHORT).show();
                     }
                 });
-
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

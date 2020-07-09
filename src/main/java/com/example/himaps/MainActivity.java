@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
             userFragment = (ThirdFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[2]);
         }
         initView();
-        int id = getIntent().getIntExtra("id", 0);
-        if (id == 1) {
+        int JumpId = getIntent().getIntExtra("JumpId", 0);
+        if (JumpId == 1) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_first,new FirstFragment())
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         mapFragment = (SecondFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);
         userFragment = (ThirdFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[2]);
         menuGroup = (RadioGroup)findViewById(R.id.menu_group);
+        menuGroup.bringToFront();
         //选择设置Fragment
         setTabSelection(show_tab_main);
         //点击事件

@@ -48,6 +48,10 @@ public class FirstFragment extends Fragment {
                 {Toast.makeText(getActivity(), "login failed", Toast.LENGTH_SHORT).show();}
 
                 else {Toast.makeText(getActivity(),"login success",Toast.LENGTH_SHORT).show();
+
+                textpassd.setVisibility(View.GONE);
+                getView().findViewById(R.id.btn_register).setVisibility(View.GONE);
+                getView().findViewById(R.id.btn_login).setVisibility(View.GONE);
                 /*
 
                 login success,then enter other interface
