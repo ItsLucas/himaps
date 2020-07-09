@@ -77,7 +77,6 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:background="#D55A5A"
-            android:onClick="SettingDialog"
             android:text="设置" />
 
         <Button
