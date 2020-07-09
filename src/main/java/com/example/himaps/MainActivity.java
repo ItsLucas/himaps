@@ -142,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 transaction.commit();
                 break;
-            case show_tab_user://的fragment
-                menuGroup.check(R.id.menu_user);//设置商城被选中
+            case show_tab_user://用户的fragment
+                menuGroup.check(R.id.menu_user);
                 if (userFragment == null) {
                     userFragment = new ThirdFragment();
                     transaction.add(R.id.fl_container, userFragment, FRAGMENT_TAG[index]);

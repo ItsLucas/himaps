@@ -30,7 +30,7 @@ public class ThirdFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false);
+        return inflater.inflate(R.layout.fragment_third, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -40,13 +40,47 @@ public class ThirdFragment extends Fragment {
         btn_sel=(Button)getActivity().findViewById(R.id.bt_sel);
         btn_set=(Button)getActivity().findViewById(R.id.bt_setting);
         listview = (ListView)getActivity().findViewById(R.id.listView);
-    }
-    
-    public void AddDialog(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Add Others");
 
-        final View v = getLayoutInflater().inflate(R.layout.dialog_add,null);
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Add Others");
+
+                final View v = getLayoutInflater().inflate(R.layout.dialog_add,null);
+                builder.setView(v);
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        EditText editText_userphone = v.findViewById(R.id.userphone);
+                        EditText editText_username = v.findViewById(R.id.username);
+                        /**
+                         *
+                         * 添加好友
+                         *
+                         * **/
+                        Toast.makeText(getActivity(), "Added Successfully:"+ editText_username.getText(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.show();
+            }
+        });
+    }
+/*
+    public void SettingDailog(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Change Settings");
+
+        final View v = getLayoutInflater().inflate(R.layout.dialog_set,null);
         builder.setView(v);
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -59,7 +93,7 @@ public class ThirdFragment extends Fragment {
                  *
                  * 添加好友
                  *
-                 * **/
+                 * *
                 Toast.makeText(getActivity(), "Added Successfully:"+ editText_username.getText(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -73,4 +107,5 @@ public class ThirdFragment extends Fragment {
         builder.show();
 
     }
+    */
 }

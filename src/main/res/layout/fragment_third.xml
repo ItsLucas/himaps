@@ -68,7 +68,6 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:background="#D55A5A"
-            android:onClick="AddDialog"
             android:text="添加" />
 
         <Button
