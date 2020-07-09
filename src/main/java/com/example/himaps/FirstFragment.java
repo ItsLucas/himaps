@@ -16,6 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.himaps.Model.UserData;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +34,7 @@ public class FirstFragment extends Fragment {
     private String name;
     private EditText textpassd;
     private String passd;
-
+    private UserData u;
     public static RequestQueue requestQueue;
 
     private void volleyGetRequest(String s1,String s2) {
@@ -50,8 +53,32 @@ public class FirstFragment extends Fragment {
                 login success,then enter other interface
 
                  */
+                    u= new UserData();
+                    u.setuuid(s);
+                    u.setpaw(s2);
+                    u.setname(s1);
+                    EMClient.getInstance().login(s1, s2, new EMCallBack() {
+                        @Override
+                        public void onSuccess() {
+                            EMClient.getInstance().groupManager().loadAllGroups();
+                            EMClient.getInstance().chatManager().loadAllConversations();
+                            Log.i("IM","IM Server logged in. User: "+s1);
+                        }
+
+                        @Override
+                        public void onError(int code, String error) {
+
+                        }
+
+                        @Override
+                        public void onProgress(int progress, String status) {
+
+                        }
+                    });
                 }
-                Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();}
+
+                //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
+            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError e) {
@@ -109,6 +136,13 @@ public class FirstFragment extends Fragment {
                 {textpassd.setError("the number must be over 6");return;}
                 volleyGetRequest(name,passd);
             }
+        });
+        view.findViewById(R.id.button).setOnClickListener(view1 -> {
+            Intent in = new Intent(getActivity(),ChatActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("user",u.getname());
+            in.putExtras(bundle);
+            startActivity(in);
         });
 
     }

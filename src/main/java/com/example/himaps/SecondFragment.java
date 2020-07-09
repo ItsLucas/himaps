@@ -75,6 +75,7 @@ public class SecondFragment extends Fragment {
     Button wifi;
     Button fine;
     Button course;
+    String resp;
     class GameObject {
         private int id;
         private String username;
@@ -89,6 +90,12 @@ public class SecondFragment extends Fragment {
             this.img = drawableToBitmap(ContextCompat.getDrawable(getActivity(),R.drawable.ic_md_location_on));
             this.x = 300;
             this.y = 300;
+            this.paint=new Paint();
+        }public GameObject(float x,float y){
+            //this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
+            this.img = drawableToBitmap(ContextCompat.getDrawable(getActivity(),R.drawable.ic_md_location_on));
+            this.x = x;
+            this.y = y;
             this.paint=new Paint();
         }
         public void drawSelf(Canvas canvas){
@@ -121,7 +128,7 @@ public class SecondFragment extends Fragment {
         public MySurfaceView(Context context) {
             super(context);
             this.setZOrderOnTop(true);//设置画布背景透明
-            this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+            this.getHolder().setFormat(PixelFormat.TRANSPARENT);
             this.surfaceHolder=this.getHolder();
             this.surfaceHolder.addCallback(this);
             this.objlist = new ArrayList<GameObject>();
@@ -131,6 +138,28 @@ public class SecondFragment extends Fragment {
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             this.thread = new Thread(this);
             Toast.makeText(getActivity(),"Starting thread",Toast.LENGTH_SHORT).show();
+            wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            br = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    boolean success = intent.getBooleanExtra(
+                            WifiManager.EXTRA_RESULTS_UPDATED, false);
+                    if (success) {
+                        scanSuccess();
+                    } else {
+                        // scan failure handling
+                    }
+                }
+
+            };
+            queue = Volley.newRequestQueue(getActivity());
+            StringRequest strreq = new StringRequest(Request.Method.GET, "http://52.229.167.249/getspots.php?zone=3", response -> {
+                resp=response;
+                Log.i("NETWORK","Got response from server");
+            }, error -> {
+                Log.e("TAG",error.toString());
+            });
+            queue.add(strreq);
             this.thread.start();
         }
 
@@ -158,37 +187,53 @@ public class SecondFragment extends Fragment {
         }
         @Override
         public void run() {
-
-            while(true){
-
-<<<<<<< HEAD
-                Bitmap bitmap=( (BitmapDrawable)getResources().getDrawable(R.drawable.ic_map)).getBitmap();
-                Rect rect = new Rect(0, 0, 1280, 720);//地图填充的矩形范围
-=======
-                Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
-                Rect rect = new Rect(0, 0, 100, 100);//地图填充的矩形范围
->>>>>>> 5721087ee46119b08f4b6053ee54f508d48e9fd1
-                RectF rectf = new RectF(0, 0, 50, 50);//地图放置的位置
-                canvasmap = this.surfaceHolder.lockCanvas();
-                canvasmap.drawBitmap(bitmap,rect,rectf,paint);
-                this.surfaceHolder.unlockCanvasAndPost(canvasmap);
-                int i=0;
-                canvasobj = this.surfaceHolder.lockCanvas();
-                canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
-                while(i<objlist.size())
-                {
-                    GameObject obj = objlist.get(i);
+            Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
+            Rect rect = new Rect(0, 0, 2560, 1600);//地图填充的矩形范围
+            RectF rectf = new RectF(0, 0, 1280, 1920);//地图放置的位置
+            canvasmap = this.surfaceHolder.lockCanvas();
+            canvasmap.drawBitmap(bitmap,rect,rectf,paint);
+            this.surfaceHolder.unlockCanvasAndPost(canvasmap);
+            objlist.add(new GameObject(1000.0f,1500.0f));
+            objlist.add(new GameObject(1000.0f,1000.0f));
+            GameObject genobj = new GameObject(1000.0f,100000.0f);
+            while(true) {
+                int i = 0;
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+                getActivity().getApplicationContext().registerReceiver(br, intentFilter);
+                boolean success = wifiManager.startScan();
+                if (success&&aps!=null) {
+                    canvasobj = this.surfaceHolder.lockCanvas();
+                    canvasobj.drawBitmap(bitmap, rect, rectf, paint);
+                    //canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+                    //while(i<objlist.size())
+                    //{
+                    //GameObject obj = objlist.get(i);
+                    GameObject obj = genobj;
                     obj.getPos();
-                    obj.drawSelf(canvasobj);//绘制obj到画布
-                    i++;
-                }
-                this.surfaceHolder.unlockCanvasAndPost(canvasobj);
-                try {
-                    Thread.sleep(10);
-                }catch (Exception e){
+                    //obj.drawSelf(canvasobj);//绘制obj到画布
+                    Paint p = new Paint();
+                    p.setColor(getResources().getColor(R.color.design_default_color_primary_dark));
+                    float xx,yy;
+                    adapter=new KNNAdapter(resp,aps);
+                    Address address = adapter.getAddress();
+                    xx= (float) address.getX();
+                    yy= (float) address.getY();
+                    Log.i("KNN","Located: "+xx+", "+yy);
+                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity(),"Located: "+xx+", "+yy,Toast.LENGTH_SHORT).show());
+                    canvasobj.drawCircle(xx*300.0f, yy*300.0f, 20.0f, p);
+                    //i++;
+                    //}
+                    this.surfaceHolder.unlockCanvasAndPost(canvasobj);
+
+                }try {
+                    Thread.sleep(5000);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+
+
         }
     }
     @Override
@@ -215,7 +260,7 @@ public class SecondFragment extends Fragment {
             //resultv.append(r.BSSID + "," + r.SSID + "," + r.level + "\n");
             aps.add(new AP(r.BSSID,r.SSID,r.level));
         }
-        Toast.makeText(getActivity(), aps.size() + "APs detected.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), aps.size() + "APs detected.", Toast.LENGTH_SHORT).show();
 
     }
 }
