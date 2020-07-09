@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
     }
     protected void initView() {
         //获得RadioGroup控件
+        mainFragment = (FirstFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[0]);
+        mapFragment = (SecondFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);
+        userFragment = (ThirdFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[2]);
         menuGroup = (RadioGroup)findViewById(R.id.menu_group);
         //选择设置Fragment
         setTabSelection(show_tab_main);
@@ -115,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         index = id;
+        System.out.println(id);
         // 开启一个Fragment事务
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // 设置切换动画
