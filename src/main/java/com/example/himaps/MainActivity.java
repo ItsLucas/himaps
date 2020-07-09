@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             mapFragment = (SecondFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[1]);
             userFragment = (ThirdFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG[2]);
         }
+        initView();
         int id = getIntent().getIntExtra("id", 0);
         if (id == 1) {
             getSupportFragmentManager()
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack(null)
                     .commit();
         }
-        initView();
     }
 
     @Override

@@ -83,6 +83,7 @@ public class SecondFragment extends Fragment {
         private float y;
         private Bitmap img;
         private Paint paint;
+        paint.setAlpha(150);
         public GameObject(){
             //this.img = BitmapFactory.decodeResource(getResources(),R.drawable.ic_md_location_on);
             this.img = drawableToBitmap(ContextCompat.getDrawable(getActivity(),R.drawable.ic_md_location_on));

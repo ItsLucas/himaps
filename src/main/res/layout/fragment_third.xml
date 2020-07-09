@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         android:layout_alignParentLeft="true">
 
@@ -28,7 +28,7 @@
                 android:id="@+id/img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="150dp"
+                android:layout_marginLeft="140dp"
                 android:layout_marginRight="35dp"
                 android:background="@android:color/darker_gray"
                 android:gravity="center_horizontal" />
@@ -37,22 +37,13 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            />
+            android:layout_height="20dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/bt_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginLeft="175dp"
-                android:layout_marginRight="35dp"
-                android:background="#D55A5A"
-                android:text="设置" />
         </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,14 +53,43 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="170dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:ems="20"
-            android:paddingLeft="20dp"
+            android:paddingLeft="5dp"
             android:textSize="20sp"
             android:layout_weight="1"
             android:textColor="#D55A5A"
             android:text="MyFriends" />
+        <Button
+            android:id="@+id/bt_add"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:background="#D55A5A"
+            android:onClick="AddDialog"
+            android:text="添加" />
+
+        <Button
+            android:id="@+id/bt_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:background="#D55A5A"
+            android:onClick="SettingDialog"
+            android:text="设置" />
+
+        <Button
+            android:id="@+id/bt_sel"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:background="#D55A5A"
+            android:onClick="SelDialog"
+            android:text="查询" />
     </LinearLayout>
     </LinearLayout>
     <View
@@ -86,28 +106,7 @@
         android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/bt_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
 
-            android:text="添加" />
-
-        <Button
-            android:id="@+id/bt_del"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="删除" />
-
-        <Button
-            android:id="@+id/bt_sel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:text="查询" />
 
     </LinearLayout>
 
