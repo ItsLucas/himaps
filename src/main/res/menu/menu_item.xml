@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_"
-        android:actionLayout=""
-        android:icon="@drawable/ic_md_face"/>
+        android:icon="@drawable/ic_md_face"
+        android:title="TODO" />
 </menu>
