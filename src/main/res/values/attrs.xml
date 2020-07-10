@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MySurfaceView">
+        <attr name="TextSize" format="float"></attr>
+        <attr name="TextColor" format="color"></attr>
+
+    </declare-styleable>
+</resources>

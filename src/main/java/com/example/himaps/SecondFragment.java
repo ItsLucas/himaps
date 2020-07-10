@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ import android.graphics.drawable.Drawable;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,6 +52,7 @@ import com.example.himaps.Model.Address;
 import com.example.himaps.core.AP;
 
 import java.lang.reflect.Method;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +83,7 @@ public class SecondFragment extends Fragment {
     Button course;
     String resp;
 
-    private RadioGroup menuGroup;
+    private MySurfaceView view1;
 
     class GameObject {
         private int id;
@@ -125,23 +128,34 @@ public class SecondFragment extends Fragment {
             return bitmap;
         }
     }
-    class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable{
+  public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable{
         private Thread thread;
         private Paint paint;
         private Canvas canvasobj,canvasmap;
         private SurfaceHolder surfaceHolder;
         private ArrayList<GameObject> objlist;
-        public MySurfaceView(Context context) {
-            super(context);
+        public MySurfaceView(Context context, AttributeSet attrs) {
+            super(context,attrs);
+
+            this.setKeepScreenOn(true);
             this.setZOrderOnTop(true);
             this.setZOrderMediaOverlay(true);
             this.getHolder().setFormat(PixelFormat.TRANSPARENT);
+
             this.surfaceHolder=this.getHolder();
             this.surfaceHolder.addCallback(this);
             this.objlist = new ArrayList<GameObject>();
-        }
+/**
+            RelativeLayout.LayoutParams params  =
+                    new RelativeLayout.LayoutParams(100, 100);
 
-        @Override
+            params.leftMargin = 500;
+            params.topMargin  = -30;
+
+            this.setLayoutParams(params);
+ **/       }
+
+      @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             this.thread = new Thread(this);
             Toast.makeText(getActivity(),"Starting thread",Toast.LENGTH_SHORT).show();
@@ -243,25 +257,25 @@ public class SecondFragment extends Fragment {
 
 
         }
-    }
+
+  }
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return new MySurfaceView(getActivity().getApplicationContext());
 
-        //return inflater.inflate(R.layout.fragment_second, container, false);
+    //    return new MySurfaceView(getActivity().getApplicationContext());
+
+        return inflater.inflate(R.layout.fragment_second, container, false);
 
   }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        MySurfaceView view1 = new MySurfaceView(getActivity().getApplicationContext());
-        getActivity().setContentView(view1);
-
+        getActivity().setContentView(R.layout.fragment_second);
+        view1 = (MySurfaceView)getActivity().findViewById(R.id.mysurfaceview);
     }
     private void scanSuccess() {
         List<ScanResult> results = wifiManager.getScanResults();
