@@ -3,21 +3,24 @@
     android:id="@+id/fragment_first"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/ic_bg">
 
-    //Logo,之后改为轮播图
-    <ImageView
-        android:layout_width="200dp"
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:layout_marginTop="40dp"
-        android:src="@drawable/ic_logo"/>
+        android:text="HiMaps"
+        android:textColor="@color/LogoColor"
+        android:textSize="20sp"/>
 
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:layout_marginRight="120dp"
         android:src="@drawable/ic_md_account_circle" />
 
@@ -55,24 +58,26 @@
     <Button
         android:id="@+id/btn_register"
         android:layout_width="80dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="100dp"
-        android:layout_marginTop="15dp"
         android:text="Register"
-        android:textColor="@android:color/white"
+        android:background="@drawable/shape_circle"
+        android:textColor="@color/TextColor"
+        android:layout_marginTop="10dp"
         android:textSize="12sp"/>
     <Button
         android:id="@+id/btn_login"
         android:layout_width="80dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="35dp"
-        android:layout_marginTop="-60dp"
         android:text="Login"
-        android:textColor="@android:color/white"
+        android:background="@drawable/shape_circle"
+        android:textColor="@color/TextColor"
+        android:layout_marginTop="-50dp"
         android:textSize="12sp"/>
 
     <Button

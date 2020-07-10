@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_register"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/fragment_third"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_bg"
+        android:alpha="0.5"
+        ></FrameLayout>
+    <LinearLayout
+        android:id="@+id/A"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true">
 
     <EditText
         android:id="@+id/et_user_phone"
@@ -55,13 +73,14 @@
     <Button
         android:id="@+id/btn_register"
         android:layout_width="80dp"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginTop="15dp"
+        android:background="@drawable/shape_circle"
         android:text="Register"
-        android:textColor="#D55A5A"
+        android:textColor="@color/TextColor"
         android:textSize="12sp"/>
 
     //Logo,之后改为轮播图
@@ -82,4 +101,5 @@
         android:textColor="#D55A5A"
         android:textSize="20sp"
     />
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

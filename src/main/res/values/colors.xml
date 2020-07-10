@@ -3,4 +3,8 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="LogoColor">#D55A5A</color>
+    <color name="LogoColor_night">#696969</color>
+    <color name="TextColor">#6F563B</color>
+    <color name="TextColor_night">#3b3b3b</color>
 </resources>

@@ -8,7 +8,7 @@
         android:id="@+id/tv_dis"
         android:layout_width="100dp"
         android:textSize="20sp"
-        android:textColor="#ff000000"
+        android:textColor="@color/TextColor"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         />
@@ -16,7 +16,7 @@
         android:id="@+id/tv_name"
         android:layout_width="120dp"
         android:textSize="20sp"
-        android:textColor="#ff000000"
+        android:textColor="@color/TextColor"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         />
@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/tv_phone"
         android:textSize="20sp"
-        android:textColor="#ff000000"
+        android:textColor="@color/TextColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"

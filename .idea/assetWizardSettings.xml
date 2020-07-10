@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_map" />
-                            <entry key="sourceFile" value="C:\Users\31539\AndroidStudioProjects\新建文件夹\himaps\source\map.svg" />
+                            <entry key="outputName" value="ic_bg" />
+                            <entry key="sourceFile" value="C:\Users\31539\AndroidStudioProjects\2020\himaps\source\bg.svg" />
                           </map>
                         </option>
                       </PersistentState>

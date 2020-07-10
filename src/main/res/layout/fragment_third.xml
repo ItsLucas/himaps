@@ -7,6 +7,12 @@
     android:id="@+id/fragment_third"
     >
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_bg"
+        android:alpha="0.5"
+        ></FrameLayout>
     <LinearLayout
         android:id="@+id/A"
         android:layout_width="match_parent"
@@ -30,71 +36,54 @@
                 android:layout_height="100dp"
                 android:layout_marginLeft="140dp"
                 android:layout_marginRight="35dp"
-                android:background="@android:color/darker_gray"
-                android:gravity="center_horizontal" />
+                android:background="@drawable/ic_logo"
+                android:gravity="center" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:ems="20"
-            android:paddingLeft="5dp"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            android:textColor="#D55A5A"
-            android:text="MyFriends" />
-        <Button
-            android:id="@+id/bt_add"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:background="#D55A5A"
-            android:text="添加" />
 
-        <Button
+            <Button
+                android:id="@+id/bt_add"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_circle"
+                android:text="添加"
+                android:textSize="12sp" />
+
+            <Button
             android:id="@+id/bt_setting"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="33dp"
+            android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:background="#D55A5A"
+            android:background="@drawable/shape_circle"
+            android:textSize="12sp"
             android:text="设置" />
 
         <Button
             android:id="@+id/bt_sel"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="33dp"
+            android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
-            android:background="#D55A5A"
-            android:onClick="SelDialog"
-            android:text="查询" />
+            android:background="@drawable/shape_circle"
+            android:text="查询"
+            android:textSize="12sp"/>
     </LinearLayout>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
 
-        android:background="#11000000" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,8 +100,9 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_below="@+id/B"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/B"
+        android:layout_marginTop="0dp" />
 
 </RelativeLayout>
