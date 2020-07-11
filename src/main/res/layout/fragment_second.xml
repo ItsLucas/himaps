@@ -5,10 +5,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <com.example.himaps.SecondFragment.MySurfaceView
+    <com.example.himaps.MySurfaceView
         android:id="@+id/mysurfaceview"
         android:layout_height="100dp"
-        android:layout_width="100dp">
+        android:layout_width="100dp"/>
 
-    </com.example.himaps.SecondFragment.MySurfaceView>
-</LinearLayout>
+    </LinearLayout>
