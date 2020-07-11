@@ -183,6 +183,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     }
     @Override
     public void run() {
+        paint = new Paint();
         Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
         Rect rect = new Rect(0, 0,3280 , 2560);//地图填充的矩形范围
         RectF rectf = new RectF(0, 0, 1500,3000 );//地图放置的位置
@@ -197,12 +198,12 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             int i = 0;
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-           context.registerReceiver(br, intentFilter);
+            context.registerReceiver(br, intentFilter);
             boolean success = wifiManager.startScan();
             if (success&&aps!=null) {
                 canvasobj = this.surfaceHolder.lockCanvas();
                 canvasobj.drawBitmap(bitmap, rect, rectf, paint);
-                canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+                //canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
                 //while(i<objlist.size())
                 //{
                 //GameObject obj = objlist.get(i);
