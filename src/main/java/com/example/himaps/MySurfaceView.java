@@ -29,10 +29,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.himaps.KNNAdapter;
 import com.example.himaps.Model.Address;
-import com.example.himaps.R;
-import com.example.himaps.SecondFragment;
 import com.example.himaps.core.AP;
 
 import java.util.ArrayList;
