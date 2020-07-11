@@ -61,12 +61,14 @@ public class FirstFragment extends Fragment {
                     u.setuuid(s);
                     u.setpaw(s2);
                     u.setname(s1);
+
                     EMClient.getInstance().login(s1, s2, new EMCallBack() {
                         @Override
                         public void onSuccess() {
                             EMClient.getInstance().groupManager().loadAllGroups();
                             EMClient.getInstance().chatManager().loadAllConversations();
                             Log.i("IM","IM Server logged in. User: "+s1);
+                            UserDataStorage.data = u;
                         }
 
                         @Override

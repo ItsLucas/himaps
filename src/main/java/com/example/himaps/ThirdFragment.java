@@ -1,11 +1,13 @@
 package com.example.himaps;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.sip.SipSession;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.himaps.Model.UserData;
+import com.google.gson.Gson;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,16 +45,58 @@ public class ThirdFragment extends Fragment {
     private ListView listview;
     private ArrayList<Map<String, Object>> userdata;
     private Button btn_img;
+    private RequestQueue queue;
+    class FriendData {
+        public ArrayList<String> data;
 
+        public FriendData(ArrayList<String> data) {
+            this.data = data;
+        }
+    }
+    private FriendData data;
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        queue = Volley.newRequestQueue(getActivity());
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_third, container, false);
     }
+    private void volleyGetRequestFriend(String s1) {
+        StringRequest stringRequest;
+        //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
+        stringRequest = new StringRequest("http://52.229.167.249/getfriend.php?user=" +s1, s -> {
+                data=new Gson().fromJson(s.toString(),FriendData.class);
+            for(String x : data.data) {
+                Map<String, Object> item = new HashMap<>();
+                item.put("dis", "15");
+                item.put("name", x);
+                item.put("phone", "11122233333");
+                userdata.add(item);
+            }
+            /**
+             * 加载已添加联系人信息
+             * **/
 
+            showList();
+            }, e -> Log.i("--get--", "onResponse: " + e));
+        queue.add(stringRequest);
+    }
+    private void volleyGetRequestAddFriend(String s1) {
+        StringRequest stringRequest;
+        //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
+        stringRequest = new StringRequest("http://52.229.167.249/getfriend.php?uuid="+UserDataStorage.data.getuuid()
+                +"&user=" + UserDataStorage.data.getname() + "&friend=" + s1, s -> {
+            Toast.makeText(getActivity(), "Added Successfully:"+ s1,Toast.LENGTH_SHORT).show();
+            //样例
+
+
+
+        }, e -> Log.i("--get--", "onResponse: " + e));
+        queue.add(stringRequest);
+    }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -52,30 +107,25 @@ public class ThirdFragment extends Fragment {
 
         userdata = new ArrayList<>();
         Map<String, Object> item = new HashMap<>();
+        volleyGetRequestFriend(UserDataStorage.data.getname());
+
         item.put("dis","距离（m)"); item.put("name","姓名");  item.put("phone","电话");
         userdata.add(item);
 
-        //样例
-        item = new HashMap<>();
-        item.put("dis","15");item.put("name","Simon");item.put("phone","15183881327");
-        userdata.add(item);
 
-        /**
-         * 加载已添加联系人信息
-         * **/
-
-        showList();
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Map<String,Object>listItem=(Map<String,Object>)listview.getItemAtPosition(i);
-                String telephone = (String)listItem.get("phone");
-                /**
-                 *
-                 *与电话号码为telephone的用户聊天
-                 *
-                 **/
+                String telephone = (String)listItem.get("name");
+                Intent in = new Intent(getActivity(),ChatActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("user","me");
+                bundle.putBoolean("isroom",false);
+                bundle.putString("oppo",telephone);
+                in.putExtras(bundle);
+                startActivity(in);
             }
         });
 
@@ -96,12 +146,7 @@ public class ThirdFragment extends Fragment {
 
                         EditText editText_userphone = v.findViewById(R.id.userphone);
                         EditText editText_username = v.findViewById(R.id.username);
-                        /**
-                         *
-                         * 添加好友
-                         *
-                         * **/
-                        Toast.makeText(getActivity(), "Added Successfully:"+ editText_username.getText(),Toast.LENGTH_SHORT).show();
+                        volleyGetRequestAddFriend(editText_username.getText().toString());
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -199,11 +244,6 @@ public class ThirdFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         EditText editText_username = v.findViewById(R.id.username);
-                        /**
-                         *
-                         * 查询好友
-                         *
-                         * **/
                         Toast.makeText(getActivity(), "Found Successfully:"+ editText_username.getText(),Toast.LENGTH_SHORT).show();
                     }
                 });
