@@ -63,12 +63,14 @@ public class FirstFragment extends Fragment {
                     u.setuuid(s);
                     u.setpaw(s2);
                     u.setname(s1);
+
                     EMClient.getInstance().login(s1, s2, new EMCallBack() {
                         @Override
                         public void onSuccess() {
                             EMClient.getInstance().groupManager().loadAllGroups();
                             EMClient.getInstance().chatManager().loadAllConversations();
                             Log.i("IM","IM Server logged in. User: "+s1);
+                            UserDataStorage.data = u;
                         }
 
                         @Override
@@ -112,6 +114,7 @@ public class FirstFragment extends Fragment {
                 //enter the register interface(add a phone edit text)调
             }
         });
+        UserDataStorage.stopThread=true;
         textname=(EditText) view.findViewById(R.id.et_user_name);
         textpassd=(EditText) view.findViewById(R.id.et_psw);
         view.findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {

@@ -41,6 +41,7 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(),MapAcitiviy.class));
+
             }
         });
 

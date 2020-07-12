@@ -20,18 +20,23 @@ import java.util.List;
 public class ChatActivity extends AppCompatActivity {
     private EditText editText;
     private String username = "lucas";
+    private String opponent = "";
     private MessageAdapter adapter;
     private ListView listview;
+    private boolean isRoom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Bundle bundle = this.getIntent().getExtras();
         username = bundle.getString("user");
+        isRoom = bundle.getBoolean("isroom");
+        opponent = bundle.getString("oppo");
         editText = findViewById(R.id.editText);
         listview = findViewById(R.id.messages_view);
         adapter = new MessageAdapter(this);
         listview.setAdapter(adapter);
+        if(isRoom)
         EMClient.getInstance().chatroomManager().joinChatRoom("120445940596738", new EMValueCallBack<EMChatRoom>() {
             @Override
             public void onSuccess(EMChatRoom emChatRoom) {
@@ -93,8 +98,11 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View view) {
         String message = editText.getText().toString();
         if (message.length() > 0) {
-            EMMessage msg = EMMessage.createTxtSendMessage(message, "120445940596738");
-            msg.setChatType(EMMessage.ChatType.ChatRoom);
+            EMMessage msg = null;
+            if (isRoom) msg = EMMessage.createTxtSendMessage(message, "120445940596738");
+            else msg=EMMessage.createTxtSendMessage(message,opponent);
+            if(isRoom)msg.setChatType(EMMessage.ChatType.ChatRoom);
+            else msg.setChatType(EMMessage.ChatType.Chat);
             EMClient.getInstance().chatManager().sendMessage(msg);
             editText.getText().clear();
             final Message msg2 = new Message(message,

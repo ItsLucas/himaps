@@ -34,7 +34,7 @@ public class MainActivity extends ThemeActivity {
     private int mrIndex = show_tab_main;//默认选中
 
     private int index = -100;// 记录当前的选项
-
+    private String username = null;
     private FirstFragment mainFragment;
     private SecondFragment mapFragment;
     private ThirdFragment userFragment;

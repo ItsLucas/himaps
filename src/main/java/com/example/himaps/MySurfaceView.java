@@ -30,6 +30,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.himaps.Model.Address;
+import com.example.himaps.Model.UserData;
 import com.example.himaps.core.AP;
 
 import java.util.ArrayList;
@@ -103,6 +104,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     BroadcastReceiver br;
     RequestQueue queue;
     Button testButton;
+    IntentFilter intentFilter;
     Button button2;
     Button wifi;
     Button fine;
@@ -134,28 +136,17 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         this.thread = new Thread(this);
 
         Toast.makeText(context,"Starting thread",Toast.LENGTH_SHORT).show();
-        wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        br = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                boolean success = intent.getBooleanExtra(
-                        WifiManager.EXTRA_RESULTS_UPDATED, false);
-                if (success) {
-                    scanSuccess();
-                } else {
-                    // scan failure handling
-                }
-            }
 
-        };
         queue = Volley.newRequestQueue(context);
         StringRequest strreq = new StringRequest(Request.Method.GET, "http://52.229.167.249/getspots.php?zone=3", response -> {
             resp=response;
+            UserDataStorage.resp = response;
             Log.i("NETWORK","Got response from server");
         }, error -> {
             Log.e("TAG",error.toString());
         });
         queue.add(strreq);
+        UserDataStorage.stopThread=false;
         this.thread.start();
     }
 
@@ -166,8 +157,9 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
+        this.thread.stop();
     }
+
     public Bitmap drawableToBitmap (Drawable drawable) {
 
         if (drawable instanceof BitmapDrawable) {
@@ -183,6 +175,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     }
     @Override
     public void run() {
+        paint = new Paint();
         Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
         Rect rect = new Rect(0, 0,3280 , 2560);//地图填充的矩形范围
         RectF rectf = new RectF(0, 0, 1500,3000 );//地图放置的位置
@@ -194,15 +187,19 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         objlist.add(new GameObject(1000.0f,1000.0f));
         GameObject genobj = new GameObject(1000.0f,100000.0f);
         while(true) {
+            if(UserDataStorage.stopThread)  {
+
+                break;
+            }
             int i = 0;
-            IntentFilter intentFilter = new IntentFilter();
+            intentFilter = new IntentFilter();
             intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-           context.registerReceiver(br, intentFilter);
-            boolean success = wifiManager.startScan();
-            if (success&&aps!=null) {
+            context.registerReceiver(UserDataStorage.br, intentFilter);
+            UserDataStorage.wifiManager.startScan();
+            if (UserDataStorage.aps!=null) {
                 canvasobj = this.surfaceHolder.lockCanvas();
                 canvasobj.drawBitmap(bitmap, rect, rectf, paint);
-                canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+                //canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
                 //while(i<objlist.size())
                 //{
                 //GameObject obj = objlist.get(i);
@@ -212,12 +209,12 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 Paint p = new Paint();
                 p.setColor(getResources().getColor(R.color.design_default_color_primary_dark));
                 float xx,yy;
-                adapter=new KNNAdapter(resp,aps);
+                adapter=new KNNAdapter(UserDataStorage.resp,UserDataStorage.aps);
                 Address address = adapter.getAddress();
                 xx= (float) address.getX();
                 yy= (float) address.getY();
                 Log.i("KNN","Located: "+xx+", "+yy);
-                canvasobj.drawCircle(xx*300.0f, yy*300.0f, 20.0f, p);
+                canvasobj.drawCircle(xx*700.0f, yy*700.0f, 25.0f, p);
                 //i++;
                 //}
                 this.surfaceHolder.unlockCanvasAndPost(canvasobj);
@@ -231,15 +228,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
 
     }
-    private void scanSuccess() {
-        List<ScanResult> results = wifiManager.getScanResults();
-        aps = new ArrayList<>();
-        for (ScanResult r : results) {
-            //resultv.append(r.BSSID + "," + r.SSID + "," + r.level + "\n");
-            aps.add(new AP(r.BSSID,r.SSID,r.level));
-        }
-        //Toast.makeText(getActivity(), aps.size() + "APs detected.", Toast.LENGTH_SHORT).show();
 
-    }
 
 }
