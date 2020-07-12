@@ -59,18 +59,18 @@ public class FirstFragment extends Fragment {
                 login success,then enter other interface
 
                  */
-                    UserDataStorage.data= new UserData();
-                    UserDataStorage.data.setuuid(s);
-                    UserDataStorage.data.setpaw(s2);
-                    UserDataStorage.data.setname(s1);
-
+                    UserData data = new UserData();
+                    data.setuuid(s);
+                    data.setpaw(s2);
+                    data.setname(s1);
+                    UserDataStorage.data=data;
                     EMClient.getInstance().login(s1, s2, new EMCallBack() {
                         @Override
                         public void onSuccess() {
                             EMClient.getInstance().groupManager().loadAllGroups();
                             EMClient.getInstance().chatManager().loadAllConversations();
                             Log.i("IM","IM Server logged in. User: "+s1);
-                            UserDataStorage.data = u;
+                            //UserDataStorage.data = u;
                         }
 
                         @Override

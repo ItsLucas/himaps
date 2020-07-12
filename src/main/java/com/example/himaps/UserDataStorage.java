@@ -10,7 +10,7 @@ import com.example.himaps.core.AP;
 import java.util.ArrayList;
 
 public class UserDataStorage {
-    public static UserData data;
+    public static UserData data = new UserData();
     public static ArrayList<AP> aps;
     public static WifiManager wifiManager;
     public static BroadcastReceiver br;
