@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -32,7 +33,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.himaps.Model.Address;
 import com.example.himaps.Model.UserData;
 import com.example.himaps.core.AP;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +57,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             this.strength = strength;
         }
     }
+
     class GameObject {
         private int id;
         private String username;
@@ -109,6 +113,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     Button wifi;
     Button fine;
     Button course;
+    Switch swshare;
     String resp;
     public MySurfaceView(Context context, AttributeSet attrs) {
         super(context,attrs);
@@ -134,7 +139,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         this.thread = new Thread(this);
-
         Toast.makeText(context,"Starting thread",Toast.LENGTH_SHORT).show();
 
         queue = Volley.newRequestQueue(context);
@@ -173,12 +177,37 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         return bitmap;
     }
+    private void volleyGetRequestLoc() {
+        StringRequest stringRequest;
+        //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
+        stringRequest = new StringRequest("http://52.229.167.249/getloc.php?vzone=1", s -> {//样例
+            Log.i("--get--", "onResponse: " + s);
+            UserDataStorage.ldata = new Gson().fromJson(s,UserLocData.class);
+        }, e -> Log.i("--get--", "onResponse: " + e));
+        queue.add(stringRequest);
+    }
+    private void volleyGetRequestUpLoc(float f1,float f2,boolean b1) {
+        StringRequest stringRequest;
+        int ib1;
+        if(b1)  {
+            ib1 = 1;
+        }
+        else {
+            ib1 = 0;
+        }
+        //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
+        stringRequest = new StringRequest("http://52.229.167.249/uploc.php?user=" + UserDataStorage.data.getname()
+                + "&x=" + f1 + "&y=" + f2 + "&vzone=1&vanish=" + ib1 + "&uuid=" + UserDataStorage.data.getuuid(), s -> {//样例
+            Log.i("--get--", "onResponse: " + s);
+        }, e -> Log.i("--get--", "onResponse: " + e));
+        queue.add(stringRequest);
+    }
     @Override
     public void run() {
         paint = new Paint();
         Bitmap bitmap=drawableToBitmap(getResources().getDrawable(R.drawable.ic_map));
         Rect rect = new Rect(0, 0,3280 , 2560);//地图填充的矩形范围
-        RectF rectf = new RectF(0, 0, 1500,3000 );//地图放置的位置
+        RectF rectf = new RectF(0, 0, 4500,9000 );//地图放置的位置
         canvasmap = this.surfaceHolder.lockCanvas();
         canvasmap.drawColor(Color.WHITE);//设置画布底色
         canvasmap.drawBitmap(bitmap,rect,rectf,paint);
@@ -191,6 +220,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
                 break;
             }
+            volleyGetRequestLoc();
             int i = 0;
             intentFilter = new IntentFilter();
             intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
@@ -198,6 +228,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             UserDataStorage.wifiManager.startScan();
             if (UserDataStorage.aps!=null) {
                 canvasobj = this.surfaceHolder.lockCanvas();
+                canvasmap.drawColor(Color.WHITE);//设置画布底色
+
                 canvasobj.drawBitmap(bitmap, rect, rectf, paint);
                 //canvasobj.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
                 //while(i<objlist.size())
@@ -214,10 +246,24 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 xx= (float) address.getX();
                 yy= (float) address.getY();
                 Log.i("KNN","Located: "+xx+", "+yy);
+                UserDataStorage.curx = xx;
+                UserDataStorage.cury = yy;
                 canvasobj.drawCircle(xx*700.0f, yy*700.0f, 25.0f, p);
+                if(UserDataStorage.ldata!=null) {
+                    if(UserDataStorage.ldata.data!=null) {
+                        for(UserLoc d:UserDataStorage.ldata.data) {
+                            if(!d.user.equalsIgnoreCase(UserDataStorage.data.getname())) {
+                                Paint p2 = new Paint();
+                                p.setColor(getResources().getColor(R.color.design_default_color_error));
+                                canvasobj.drawCircle(d.x*700.0f,d.y*700.0f,25.0f,p2);
+                            }
+                        }
+                    }
+                }
                 //i++;
                 //}
                 this.surfaceHolder.unlockCanvasAndPost(canvasobj);
+                volleyGetRequestUpLoc(xx,yy,UserDataStorage.vanish);
 
             }try {
                 Thread.sleep(5000);

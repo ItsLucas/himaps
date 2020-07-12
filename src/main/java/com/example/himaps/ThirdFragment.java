@@ -217,7 +217,7 @@ public class ThirdFragment extends Fragment {
                                     /**
                                      * 修改mac地址
                                      * */
-                                    volleyGetRequestChangeUser(editText_username.getText().toString(),editText_pwd.getText().toString(),editText_wifi.getText().toString());
+                                    volleyGetRequestChangeUser(UserDataStorage.data.getname(),editText_pwd.getText().toString(),editText_wifi.getText().toString());
                                 }
                             }
                         }

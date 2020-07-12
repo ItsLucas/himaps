@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.himaps.Model.UserData;
 import com.example.himaps.core.AP;
 
 import java.text.SimpleDateFormat;
@@ -35,7 +36,7 @@ public class MapAcitiviy extends AppCompatActivity {
         view1=(MySurfaceView)findViewById(R.id.mysurfaceview);
         tdp = findViewById(R.id.TDP);
         sw=findViewById(R.id.sw_share);
-
+        sw.setOnCheckedChangeListener((compoundButton, b) -> UserDataStorage.vanish = !b);
         SimpleDateFormat   formatter   =   new   SimpleDateFormat   ("HH:mm:ss");
         Date curDate =  new Date(System.currentTimeMillis());//获取当前时间
         String   str   =   formatter.format(curDate);

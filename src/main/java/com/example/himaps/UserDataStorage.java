@@ -16,4 +16,8 @@ public class UserDataStorage {
     public static BroadcastReceiver br;
     public static boolean stopThread = false;
     public static String resp;
+    public static float curx = 0;
+    public static float cury = 0;
+    public static boolean vanish = false;
+    public static UserLocData ldata;
 }
