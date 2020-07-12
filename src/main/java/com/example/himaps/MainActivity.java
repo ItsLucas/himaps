@@ -22,7 +22,7 @@ import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ThemeActivity {
 
     private RadioGroup menuGroup;
     private FragmentManager fragmentManager;

@@ -187,7 +187,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         Rect rect = new Rect(0, 0,3280 , 2560);//地图填充的矩形范围
         RectF rectf = new RectF(0, 0, 1500,3000 );//地图放置的位置
         canvasmap = this.surfaceHolder.lockCanvas();
-        canvasmap.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置画布透明
+        canvasmap.drawColor(Color.WHITE);//设置画布底色
         canvasmap.drawBitmap(bitmap,rect,rectf,paint);
         this.surfaceHolder.unlockCanvasAndPost(canvasmap);
         objlist.add(new GameObject(1000.0f,1500.0f));

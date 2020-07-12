@@ -1,4 +1,4 @@
-package com.example.himaps.Model;
+package com.example.himaps;
 
 import android.content.Context;
 import android.content.res.Resources;

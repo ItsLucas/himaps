@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -20,6 +21,7 @@ import com.example.himaps.Model.UserData;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
