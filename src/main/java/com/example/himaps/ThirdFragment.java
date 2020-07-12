@@ -64,7 +64,7 @@ public class ThirdFragment extends Fragment {
         StringRequest stringRequest;
         //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
         stringRequest = new StringRequest("http://52.229.167.249/getfriend.php?user=" + s1, s -> {
-            data = new Gson().fromJson(s.toString(), FriendData.class);
+            data = new Gson().fromJson(s, FriendData.class);
             if (data == null) return;
             for (Friend x : data.data) {
                 Map<String, Object> item = new HashMap<>();

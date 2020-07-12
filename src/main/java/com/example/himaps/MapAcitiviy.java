@@ -40,7 +40,6 @@ public class MapAcitiviy extends AppCompatActivity {
         Date curDate =  new Date(System.currentTimeMillis());//获取当前时间
         String   str   =   formatter.format(curDate);
         tdp.setText("Time: "+ str);
-<<<<<<< HEAD
 
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -63,7 +62,6 @@ public class MapAcitiviy extends AppCompatActivity {
                 }
             }
         });
-=======
         UserDataStorage.wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         UserDataStorage.br = new BroadcastReceiver() {
             @Override
@@ -95,6 +93,5 @@ public class MapAcitiviy extends AppCompatActivity {
         }
         //Toast.makeText(getActivity(), aps.size() + "APs detected.", Toast.LENGTH_SHORT).show();
 
->>>>>>> f8302b03c703a913c11722b04b09803fc0e5461c
     }
 }

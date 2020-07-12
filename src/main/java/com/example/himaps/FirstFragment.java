@@ -59,10 +59,10 @@ public class FirstFragment extends Fragment {
                 login success,then enter other interface
 
                  */
-                    u= new UserData();
-                    u.setuuid(s);
-                    u.setpaw(s2);
-                    u.setname(s1);
+                    UserDataStorage.data= new UserData();
+                    UserDataStorage.data.setuuid(s);
+                    UserDataStorage.data.setpaw(s2);
+                    UserDataStorage.data.setname(s1);
 
                     EMClient.getInstance().login(s1, s2, new EMCallBack() {
                         @Override
