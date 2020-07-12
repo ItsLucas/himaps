@@ -46,10 +46,19 @@ public class ThirdFragment extends Fragment {
     private ArrayList<Map<String, Object>> userdata;
     private Button btn_img;
     private RequestQueue queue;
-    class FriendData {
-        public ArrayList<String> data;
+    class Friend {
+        public String name;
+        public String phone;
 
-        public FriendData(ArrayList<String> data) {
+        public Friend(String name, String phone) {
+            this.name = name;
+            this.phone = phone;
+        }
+    }
+    class FriendData {
+        public ArrayList<Friend> data;
+
+        public FriendData(ArrayList<Friend> data) {
             this.data = data;
         }
     }
@@ -69,11 +78,13 @@ public class ThirdFragment extends Fragment {
         //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
         stringRequest = new StringRequest("http://52.229.167.249/getfriend.php?user=" +s1, s -> {
                 data=new Gson().fromJson(s.toString(),FriendData.class);
-            for(String x : data.data) {
+                if(data==null) return;
+            for(Friend x : data.data) {
                 Map<String, Object> item = new HashMap<>();
                 item.put("dis", "15");
-                item.put("name", x);
-                item.put("phone", "11122233333");
+                item.put("name", x.name);
+                item.put("phone", x.phone);
+                if(!userdata.contains(item))
                 userdata.add(item);
             }
             /**
@@ -87,10 +98,11 @@ public class ThirdFragment extends Fragment {
     private void volleyGetRequestAddFriend(String s1) {
         StringRequest stringRequest;
         //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
-        stringRequest = new StringRequest("http://52.229.167.249/getfriend.php?uuid="+UserDataStorage.data.getuuid()
+        stringRequest = new StringRequest("http://52.229.167.249/addfriend.php?uuid="+UserDataStorage.data.getuuid()
                 +"&user=" + UserDataStorage.data.getname() + "&friend=" + s1, s -> {
             Toast.makeText(getActivity(), "Added Successfully:"+ s1,Toast.LENGTH_SHORT).show();
             //样例
+            volleyGetRequestFriend(UserDataStorage.data.getname());
 
 
 
@@ -99,7 +111,7 @@ public class ThirdFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        UserDataStorage.stopThread=true;
         btn_add=(Button)getActivity().findViewById(R.id.bt_add);
         btn_sel=(Button)getActivity().findViewById(R.id.bt_sel);
         btn_set=(Button)getActivity().findViewById(R.id.bt_setting);

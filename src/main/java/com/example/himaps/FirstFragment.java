@@ -112,6 +112,7 @@ public class FirstFragment extends Fragment {
                 //enter the register interface(add a phone edit text)调
             }
         });
+        UserDataStorage.stopThread=true;
         textname=(EditText) view.findViewById(R.id.et_user_name);
         textpassd=(EditText) view.findViewById(R.id.et_psw);
         view.findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
