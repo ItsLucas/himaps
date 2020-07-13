@@ -5,10 +5,6 @@ import com.example.himaps.Model.Address;
 import com.example.himaps.Model.Cellule;
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 

@@ -38,7 +38,7 @@ public class AccessPoint {
         this.strength = strength;
     }
 
-    public boolean isSame(String macAddr){
+    public boolean isSame(String macAddr) {
         return this.macAddr.equals(macAddr);
     }
 }

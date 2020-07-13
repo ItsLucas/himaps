@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +30,7 @@ public class MapAcitiviy extends AppCompatActivity {
     private TextView tdp;
     private WifiManager wifiManager;
     private BroadcastReceiver br;
+    private Thread t;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -41,7 +44,28 @@ public class MapAcitiviy extends AppCompatActivity {
         Date curDate =  new Date(System.currentTimeMillis());//获取当前时间
         String   str   =   formatter.format(curDate);
         tdp.setText("Time: "+ str);
+        t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    UserDataStorage.covidwatcher=true;
+                    if (UserDataStorage.curx >= 0.75f && UserDataStorage.curx <= 1.25f && UserDataStorage.cury >= 0.75f && UserDataStorage.cury <= 1.25f) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Warning: COVID-19 risk nearby!", Toast.LENGTH_SHORT).show();
 
+                            }
+                        });
+                    }
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean ischecked) {
@@ -77,6 +101,8 @@ public class MapAcitiviy extends AppCompatActivity {
             }
 
         };
+        if(!UserDataStorage.covidwatcher)
+        t.start();
     }
 
     @Override

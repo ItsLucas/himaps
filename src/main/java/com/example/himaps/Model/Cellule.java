@@ -30,13 +30,13 @@ public class Cellule {
         return accessPoints;
     }
 
-    public double[] getVectorOfSignal(){
+    public double[] getVectorOfSignal() {
 
         double[] multiples = new double[accessPoints.size()];
-        for (int i =0 ; i< accessPoints.size();i++) {
+        for (int i = 0; i < accessPoints.size(); i++) {
             multiples[i] = accessPoints.elementAt(i).getStrength();
         }
-        return  multiples;
+        return multiples;
     }
 
 }

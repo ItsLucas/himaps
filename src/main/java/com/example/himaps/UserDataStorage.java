@@ -20,4 +20,5 @@ public class UserDataStorage {
     public static float cury = 0;
     public static boolean vanish = false;
     public static UserLocData ldata;
+    public static boolean covidwatcher = false;
 }

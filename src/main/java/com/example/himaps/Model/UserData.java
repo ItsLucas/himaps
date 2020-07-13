@@ -1,6 +1,6 @@
 package com.example.himaps.Model;
 
-public class UserData{
+public class UserData {
     private String name;
     private String psw;
     private String uuid;

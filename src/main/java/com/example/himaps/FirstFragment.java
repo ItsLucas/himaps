@@ -146,19 +146,7 @@ public class FirstFragment extends Fragment {
                 volleyGetRequest(name,passd);
             }
         });
-        view.findViewById(R.id.button).setOnClickListener(view1 -> {
-            if(UserDataStorage.curx<=2.1f&&UserDataStorage.cury<=2.1f) {
-                Intent in = new Intent(getActivity(), ChatActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("user", UserDataStorage.data.getname());
-                bundle.putBoolean("isroom", true);
-                in.putExtras(bundle);
-                startActivity(in);
-            }
-            else {
-                Toast.makeText(getActivity(), "Not in vzone!", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
     }
 

@@ -10,13 +10,13 @@ public class Address {
     }
 
     public Address() {
-        this.x =0;
+        this.x = 0;
         this.y = 0;
     }
 
     public Address(String element, String element1) {
-        this.x=Integer.parseInt(element);
-        this.y= Integer.parseInt(element1);
+        this.x = Integer.parseInt(element);
+        this.y = Integer.parseInt(element1);
 
     }
 
@@ -53,21 +53,22 @@ public class Address {
                 '}';
     }
 
-    public Address add(Address address){
-        this.setX(this.getX()+address.getX());
-        this.setY(this.getY()+address.getY());
+    public Address add(Address address) {
+        this.setX(this.getX() + address.getX());
+        this.setY(this.getY() + address.getY());
         return this;
     }
 
-    public Address div(double div){
-       this.setY(this.getY()/div);
-       this.setX(this.getX()/div);
+    public Address div(double div) {
+        this.setY(this.getY() / div);
+        this.setX(this.getX() / div);
 
         return this;
     }
-    public Address mul(double div){
-        this.setY(this.getY()*div);
-        this.setX(this.getX()*div);
+
+    public Address mul(double div) {
+        this.setY(this.getY() * div);
+        this.setX(this.getX() * div);
 
         return this;
     }

@@ -1,6 +1,6 @@
 package com.example.himaps.Model;
 
-public class Distance implements Comparable{
+public class Distance implements Comparable {
 
     double distance;
     Cellule cellule;
@@ -28,17 +28,13 @@ public class Distance implements Comparable{
     }
 
     public int compareTo(Object o) {
-        //return either 1, 0, or -1
-        //that you compare between this object and object a
 
-        if(this.getDistance()== ((Distance) o).getDistance())
+        if (this.getDistance() == ((Distance) o).getDistance())
             return 0;
 
-        if(this.getDistance()< ((Distance) o).getDistance())
-        {
+        if (this.getDistance() < ((Distance) o).getDistance()) {
             return -1;
-        }
-        else{
+        } else {
             return 1;
         }
     }

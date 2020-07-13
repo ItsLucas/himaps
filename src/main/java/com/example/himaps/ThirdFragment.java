@@ -39,6 +39,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ThirdFragment extends Fragment {
 
@@ -101,7 +103,8 @@ public class ThirdFragment extends Fragment {
         StringRequest stringRequest;
         //Toast.makeText(getActivity(), s,Toast.LENGTH_SHORT).show();
         stringRequest = new StringRequest("http://52.229.167.249/changebyuuid.php?uuid=" + UserDataStorage.data.getuuid()
-                + "&user=" + UserDataStorage.data.getname() + "&user=" + s1 + "&pass=" + s2 + "&phone=" + s3, s -> {
+                + "&user=" + UserDataStorage.data.getname() + "&pass=" + s2 + "&phone=" + s3, s -> {
+            Log.i("--get--", "onResponse: " + s);
             Toast.makeText(getActivity(), "Changed Successfully:" + s1, Toast.LENGTH_SHORT).show();
             new Thread(() -> {
                 try {
@@ -198,38 +201,56 @@ public class ThirdFragment extends Fragment {
                         Toast.makeText(getActivity(), "Upload Your Photos ", Toast.LENGTH_SHORT).show();
                     }
                 });
+                EditText editText_wifi = v.findViewById(R.id.wifi);
+                EditText editText_username = v.findViewById(R.id.username);
+                EditText editText_pwd = v.findViewById(R.id.pwd);
+                editText_username.setText(UserDataStorage.data.getname());
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        String userName = editText_username.getText().toString().trim();
+                        String psw = editText_pwd.getText().toString().trim();
+                        String userPhone = editText_wifi.getText().toString().trim();
+                        Pattern p = Pattern.compile("^[A-Za-z0-9]+$");
+                        Matcher m = p.matcher(userName);
+                        boolean fl = m.matches();
+                        Pattern p2 = Pattern.compile("^[0-9]*[1-9][0-9]*$");
+                        Matcher m2 = p2.matcher(psw);
+                        boolean f2 = m2.matches();
+                        if (userPhone.length() != 11) {
+                            editText_wifi.setError("the number of phone must be 13");
+                            Toast.makeText(getActivity(), "the number of phone must be 13", Toast.LENGTH_SHORT).show();
 
-                        EditText editText_wifi = v.findViewById(R.id.wifi);
-                        EditText editText_username = v.findViewById(R.id.username);
-                        EditText editText_pwd = v.findViewById(R.id.pwd);
-
-                        if (editText_username.getText().toString().trim() != null) {
-                            /**
-                             * 修改用户名
-                             * */if (editText_pwd.getText().toString().trim() != null) {
-                                /**
-                                 * 修改密码
-                                 * */if (editText_wifi.getText().toString().trim() != null) {
-                                    /**
-                                     * 修改mac地址
-                                     * */
-                                    volleyGetRequestChangeUser(UserDataStorage.data.getname(),editText_pwd.getText().toString(),editText_wifi.getText().toString());
-                                }
-                            }
+                            return;
                         }
+                        if (userName.equals("")) {
+                            Toast.makeText(getActivity(), "please input user-name", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (fl == false) {
+                            Toast.makeText(getActivity(), "please input correct user-name", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (userPhone.equals("")) {
+                            Toast.makeText(getActivity(), "please input phone-number", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (psw.equals("")) {
+                            Toast.makeText(getActivity(), "password is empty", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (f2 == false) {
+                            Toast.makeText(getActivity(), "please input correct password", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (psw.length() < 6) {
+                            Toast.makeText(getActivity(), "password length must exceed 6", Toast.LENGTH_SHORT).show();
 
-
-                        /**
-                         * if(!=null){
-                         *
-                         * 修改头像
-                         *
-                         * }*/
-
+                            editText_pwd.setError("the number must be over 6");
+                            return;
+                        }
+                        volleyGetRequestChangeUser(userName,psw,userPhone);
                         Toast.makeText(getActivity(), "Change Successfully:" + editText_username.getText(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -248,6 +269,19 @@ public class ThirdFragment extends Fragment {
         btn_sel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(UserDataStorage.curx<=2.1f&&UserDataStorage.cury<=2.1f) {
+                    Intent in = new Intent(getActivity(), ChatActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user", UserDataStorage.data.getname());
+                    bundle.putBoolean("isroom", true);
+                    in.putExtras(bundle);
+                    startActivity(in);
+                }
+                else {
+                    Toast.makeText(getActivity(), "Not in vzone!", Toast.LENGTH_SHORT).show();
+                }
+                /*
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Find Someone");
 
@@ -270,6 +304,8 @@ public class ThirdFragment extends Fragment {
                 });
 
                 builder.show();
+
+                 */
             }
         });
 
